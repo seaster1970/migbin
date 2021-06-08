@@ -1,0 +1,19 @@
+#!/bin/bash
+if [ -f .mainurl ]; then
+    mainurl=$(cat .mainurl)
+    if [ "$mainurl" == "" ]; then
+        echo the .mainurl file is empty. Please set the url manually
+    else
+        wp option set home $mainurl
+        if [ $? == 0 ]; then
+        wp option set siteurl $mainurl
+        wpht
+        echo the new url is $(wp option get siteurl)
+        rm .mainurl
+        else
+        echo there was a problem
+        fi
+    fi
+else
+echo there is no .mainurl file
+fi

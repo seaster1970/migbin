@@ -1,0 +1,30 @@
+#!/bin/bash
+function tempurl() {
+    mysql_host="$(uapi Mysql locate_server remote_host 2>/dev/null | grep -oP '(?<=host: ).+')"
+    if [ "$mysql_host" != "localhost" ]; then
+    main_domain=$(uapi DomainInfo list_domains 2>/dev/null | awk '$1 ~ "main_domain:" {print $2}')
+    webpath=$(pwd | grep -oP '(?<=public_html/).*')
+    tempurl="http://$main_domain/$webpath"
+    echo $tempurl
+    exit 0
+    fi
+
+    user=$(whoami) || user=$1
+    if [[ ! -f /var/cpanel/users/$user ]]; then
+        echo No access to user "'$user'"!
+    else
+        boxNum=$(hostname | awk 'BEGIN {FS = "."} ; {print $1}')
+        acctIP=$(grep IP /var/cpanel/users/$user | sed "s|IP=||")
+        url=http://$acctIP
+        url=$url/~$user
+        cur_dir=$(pwd)
+        bluerock="http://${boxNum}.temp.domains/~$(whoami)${cur_dir#*public_html}/"
+        curl -s $bluerock >/dev/null
+        if [[ $? == 0 ]]; then
+            echo $bluerock
+        else
+            echo $url${cur_dir#*public_html}/
+        fi
+    fi
+}
+tempurl
