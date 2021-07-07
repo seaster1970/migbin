@@ -20,6 +20,12 @@ Makes a backup of the wordpress site called psbu.tar
 If run in BH brand accounts, prints off current directory list and their assigned document roots.
 #### dumpdb
 Alternative for dumping wp databases, doesn't use wpcli, works on older wp versions.
+#### ducount
+Reports disk usage, filecount, and maps directories
+
+##### usage
+* ducount [ # of levels to report ]
+
 #### exportdbs
 exports all databases placing them in ~/migration_dbs/dbs
 #### findwpandimport
@@ -52,6 +58,8 @@ urls are automatically detected in the command-line arguments.
 * -p --php-version : sets the php version of the install
 #### getmysites
 Builds an outline of all wordpress sites on the account and saves to ~/migration/migstuff/mysites.txt
+#### gdrive 
+Imports google drive files
 #### httpit
 Sets WordPress site in current working directory to us http:// protocol for the home and siteurl options.
 #### httpsit
