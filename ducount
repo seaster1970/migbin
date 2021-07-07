@@ -26,5 +26,8 @@ function treesize() {
       echo $x | sed -rn 's/:/ /gp'
     fi
   done
+  if [ -s tmp_treestuff.txt ]; then 
+    rm -f tmp_treestuff.txt
+  fi
 }
 treesize $1
