@@ -15,7 +15,7 @@ function treesize() {
       filecount=$( find $dirn -type f 2>/dev/null | cut -d '/' -f 1 | sort | uniq -c | awk '{print $1}' )
       dirinfo=$( printf '%-6s %-6s' "$size" "$filecount" )
       if [[ $dirn == *'->'* ]]; then 
-        dirinfo=$( echo 'symlink 0    ' )
+        dirinfo=$( echo 'symlink      ' )
         nopath=$( echo $dirn | awk -F ":" '{print $1,"→",$3}' | sed -rn 's/(\.\/)?(.+)/\2/p' )
         echo -e "[ $dirinfo ]"'  '"$treestuff$nopath"
       else 
