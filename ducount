@@ -1,33 +1,31 @@
 #!/bin/bash
-function treesize() {
-  if [[ -z $1 ]]; then 
-    depth=2
-  else 
-    depth=$1
-  fi
-  tree -adf -L $depth > tmp_treestuff.txt
-  echo -e '  SIZE\t'' FILES\t''   .'
-  cat tmp_treestuff.txt | sed -rn 's/\s/:/pg' | while read x ; do 
-    if [[ $x =~ .*\.\/.* ]]; then 
-      treestuff=$( printf "$x" | grep -oP '.*(?=\.\/)' | sed -rn 's/:/ /gp' )
-      dirn=$( printf "$x" | grep -oP '.*\K\.\/.+' )
-      size=$( du -sh $dirn 2>/dev/null | awk '{print $1}' )
-      filecount=$( find $dirn -type f 2>/dev/null | cut -d '/' -f 1 | sort | uniq -c | awk '{print $1}' )
-      dirinfo=$( printf '%-6s %-6s' "$size" "$filecount" )
-      if [[ $dirn == *'->'* ]]; then 
-        dirinfo=$( echo 'symlink      ' )
-        nopath=$( echo $dirn | awk -F ":" '{print $1,"→",$3}' | sed -rn 's/(\.\/)?(.+)/\2/p' )
-        echo -e "[ $dirinfo ]"'  '"$treestuff$nopath"
+function ducount() {
+  width=$( ls -A1 | while read i ; do length=$( expr $( echo "$i" | wc -c ) \+ 34 ); echo $length ; done | sort -n -r | head -n 1 )
+  width1=$( ls -A1 | while read i ; do length=$( expr $( echo "$i" | wc -c ) \+ 2 ) ; echo $length ; done | sort -n -r | head -n 1 )
+  # echo -n ' ┌'
+  # for item in $( seq 1 "$width" ); do echo -n '─'; done 
+  # echo -ne '┐\n'
+  format="%-${width1}s %-9s %-9s %-9s\n"
+  header=$( printf "$format" "FILENAME" " DU" " FILES" " DIRS" )
+  # echo ' │ '"$header"' │'
+  # echo -n ' ├'
+  # for item in $( seq 1 "$width" ); do echo -n '─'; done 
+  # echo -ne '┤\n'
+  find ./ -maxdepth 1 -exec du -sh {} \; | tail -n +2 | sort -r -h | while read x
+    do
+      base_item=$( echo "$x" | grep -oP '\d+([G|M|K])?\s+\.\/\K.+' )
+      type=$( stat -c%F "$base_item" ) ; size=$( echo "$x" | awk '{print $1}' )
+      filecount=$( find ./"$base_item" -type f 2>/dev/null | wc -l )
+      if [[ $type == 'directory' ]]; then 
+        num_dirs=$( find ./"$base_item" -maxdepth 1 -exec stat -c%F {} \; | tail -n +2 | grep directory | wc -l )
       else 
-        nopath=$( echo $dirn | rev | cut -d '/' -f 1 | rev )
-        echo -e "[ $dirinfo ]"'  '"$treestuff$nopath"
-      fi
-    else 
-      echo $x | sed -rn 's/:/ /gp'
-    fi
-  done
-  if [ -s tmp_treestuff.txt ]; then 
-    rm -f tmp_treestuff.txt
-  fi
+        num_dirs='0'
+      fi 
+      line=$( printf "$format" "$base_item  " " $size" " $filecount" " $num_dirs" )
+      # echo ' │ '"$line"' │'
+    done
+    # echo -n ' └'
+    # for item in $( seq 1 "$width" ); do echo -n '─'; done
+    # echo -ne '┘\n'
 }
-treesize $1
+ducount
