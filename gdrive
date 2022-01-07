@@ -3,9 +3,9 @@ function gdrive () {
     if [[ $1 == '-h' ]]; then
         echo        
         echo "usage"
-        echo "gdrive_download"
+        echo "gdrive"
         echo "or"
-        echo "gdrive_download fileid filename"
+        echo "gdrive fileid filename"
         echo
     else
         fileid=$1
@@ -21,4 +21,4 @@ function gdrive () {
     rm -rf /tmp/cookies.txt
   fi
 }
-gdrive
+gdrive $1 $2
