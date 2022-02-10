@@ -51,7 +51,7 @@ example usage:
 
 urls are automatically detected in the command-line arguments.
 
-##### flags
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;##### flags
 * -h --help : displays this message
 * -t --test : runs automated testing on the functions in this file.
 * -w --wordpress-version : sets the wordpress version of the install
@@ -75,7 +75,7 @@ Example:
 #### lftpline
 Prompts for lftp creds to autogenerate lftp line.
 
-##### flags
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;##### flags
 * -go --opens lftp connection instead of printing line
 #### mailprep
 Prompts you for a list of imap lines and creates email accounts for you. Does not play nicely with some passwords.
@@ -110,7 +110,7 @@ Logs in to the source server
 #### migssl
 purges the cache and runs a search-replace for wordpress sites.
 
-##### flags
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;##### flags
 * -on  --secures site, replaces http links with https
 * -off --disables https for the site, deactivates a few plugins which force ssl on wp sites.
 #### migsync
@@ -145,7 +145,7 @@ displays dns settings for the domain you provide as the argument.
 This is wpcli use with --help to see help for every command
 #### wpdbconn
 prints wp install mysql connection line, mysqldump line, or lists the db credentials. 
-##### flags
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;##### flags
 * no flag will print the mysql connection string for the wp installation
 * -l --lists the db credentials
 * -d --prints the mysql dump line 
@@ -160,7 +160,7 @@ Displays info about te wordpress site in the current dir.
 #### wpinstall
 Installs a fresh wordpress site or repairs existing. 
 
-##### flags
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;##### flags
 * -db --runs wpdbimport after install
 #### wpjquery
 Installs and activates the plugin enable-jquery-migrate-helper for wp sites w/ js errors
@@ -176,7 +176,7 @@ Updates wp-config.php variables in the current dir.
 Lets you read and/or set the home and/or siteurl option for the wordpress site in the current directory.
 
 Run without flags to only read the values.
-##### flags
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;##### flags
 * -n Sets both to provided argument.
 * -h Sets home to provided argument.
 * -s Sets siteurl to provided argument.
