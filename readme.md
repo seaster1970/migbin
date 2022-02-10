@@ -150,7 +150,7 @@ source ~/bin/migbin/bashrc
 #### wplive
 - configures a wordpress site from the backup directory to it's live directory
 - example:
-    ```wplive ~/migration/files/ ~/public_html```  
+    ```wplive ~/migration/files/ ~/public_html/```  
 #### wptoggle
 - Lists all active plugins and toggles off then on. Situational use only, deactivating plugins can cause issues w/ sites db's.
 #### wpup
