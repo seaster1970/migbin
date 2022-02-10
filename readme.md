@@ -41,7 +41,7 @@ source ~/bin/migbin/bashrc
 - Runs a set of common wordpress fixes in your current directory.
 #### free_wordpress
 - Accepts a php version, WordPress version and list of urls to WordPress backup files and installs the site in the current directory.
-- example:
+- example:  
 ```$ free_wordpress --wp-version="5.3.3" --php-version="7.3" https://url.1 https://url.2 https://url.3 ...```
 - urls are automatically detected in the command-line arguments.
 * flags
@@ -69,8 +69,8 @@ source ~/bin/migbin/bashrc
     * -go --opens lftp connection instead of printing line
 #### mailprep
 - Prompts you for a list of imap lines and creates email accounts for you. Does not play nicely with some passwords.
-- Imap lines look like this:
-- ```source-imap-mailserver source-email-address source-password destination-imap-mailserver destination-email-address destination-password```
+- Imap lines look like this:  
+```source-imap-mailserver source-email-address source-password destination-imap-mailserver destination-email-address destination-password```
 #### mailsync
 - syncs etc and mail.  used to sync an individual domain.
 - does not overwrite existing pw files. 
