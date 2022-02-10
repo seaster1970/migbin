@@ -53,7 +53,7 @@ example usage:
 urls are automatically detected in the command-line arguments.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-#####flags
+##### flags
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 * -h --help : displays this message
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -83,7 +83,7 @@ Example:
 Prompts for lftp creds to autogenerate lftp line.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-#####flags
+##### flags
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 * -go --opens lftp connection instead of printing line
 #### mailprep
@@ -122,7 +122,7 @@ Logs in to the source server
 purges the cache and runs a search-replace for wordpress sites.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-#####flags
+##### flags
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 * -on  --secures site, replaces http links with https
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -163,7 +163,7 @@ This is wpcli use with --help to see help for every command
 #### wpdbconn
 prints wp install mysql connection line, mysqldump line, or lists the db credentials. 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-#####flags
+##### flags
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 * no flag will print the mysql connection string for the wp installation
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -184,7 +184,7 @@ Displays info about te wordpress site in the current dir.
 Installs a fresh wordpress site or repairs existing. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-#####flags
+##### flags
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 * -db --runs wpdbimport after install
 #### wpjquery
@@ -203,7 +203,7 @@ Lets you read and/or set the home and/or siteurl option for the wordpress site i
 
 Run without flags to only read the values.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-#####flags
+##### flags
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 * -n Sets both to provided argument.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
