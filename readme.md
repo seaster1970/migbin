@@ -143,6 +143,14 @@ Uses git pull to update all scripts to the current version on github
 displays dns settings for the domain you provide as the argument.
 #### wp
 This is wpcli use with --help to see help for every command
+#### wpdbconn
+prints wp install mysql connection line, mysqldump line, or lists the db credentials. 
+##### flags
+* no flag will print the mysql connection string for the wp installation
+* -l --lists the db credentials
+* -d --prints the mysql dump line 
+* -q --silent mode
+* the flags q and d can be combined as either -qd or -dq
 #### wpdbimport
 Imports an sql file, as the argument, and sets up a wp-config.php file for it if there is already a wp-config file in the current directory.
 #### wpht
