@@ -1,43 +1,57 @@
 #!/bin/bash
 function wpdbconn() {
 
-    wpdbcreds=$(php -w wp-config.php | sed -rn s'/\;/\;\n/gp' | grep -oP 'define.+DB_(NAME|USER|PASSWORD|HOST).+\;$')
-    wpdbname=$(php -r "${wpdbcreds} echo DB_NAME;")
-    wpdbuser=$(php -r "${wpdbcreds} echo DB_USER;")
-    wpdbpass=$(php -r "${wpdbcreds} echo DB_PASSWORD;")
-    wpdbhost=$(php -r "${wpdbcreds} echo DB_HOST;")
+    if [[ -s wp-config.php ]]; then
 
-    if [[ "${wpdbhost}" == *':'* ]]; then
+        wpdbcreds=$(php -w wp-config.php | sed -rn s'/\;/\;\n/gp' | grep -oP 'define.+DB_(NAME|USER|PASSWORD|HOST).+\;$')
+        wpdbname=$(php -r "${wpdbcreds} echo DB_NAME;")
+        wpdbuser=$(php -r "${wpdbcreds} echo DB_USER;")
+        wpdbpass=$(php -r "${wpdbcreds} echo DB_PASSWORD;")
+        wpdbhost=$(php -r "${wpdbcreds} echo DB_HOST;")
 
-        dbhost=$(echo ${wpdbhost} | cut -d ':' -f 1)
-        dbport=$(echo ${wpdbhost} | cut -d ':' -f 2)
-        wpdbhost="${dbhost} --port=${dbport}"
+        if [[ "${wpdbhost}" == *':'* ]]; then
+
+            dbhost=$(echo ${wpdbhost} | cut -d ':' -f 1)
+            dbport=$(echo ${wpdbhost} | cut -d ':' -f 2)
+            wpdbhost="${dbhost} --port=${dbport}"
+
+        fi
+
+        if [[ -z "${wpdbname}" || -z "${wpdbuser}" || -z "${wpdbpass}" || -z "${wpdbhost}" ]]; then 
+
+            echo -e "Could not set one or more variable, here is what was found:\nwpdbname: ${wpdbname}\nwpdbuser: ${wpdbuser}\nwpdbpass: ${wpdbpass}\nwpdbhost: ${wpdbhost}"
+
+        fi 
+        
+        wpdbconn="${wpdbname} -u ${wpdbuser} -p'${wpdbpass}' -h ${wpdbhost}"
+
+        if [[ "$1" == '-l' ]]; then 
+
+            echo -e "wpdbname: ${wpdbname}\nwpdbuser: ${wpdbuser}\nwpdbpass: ${wpdbpass}\nwpdbhost: ${wpdbhost}"
+
+        elif [[ "$1" == '-d' ]]; then
+
+            echo "mysqldump ${wpdbconn}"
+
+        elif [[ "$1" == '-q' ]]; then
+
+            echo "mysql -sN ${wpdbconn}"
+        
+        elif [[ "$1" == '-qd' || "$1" == '-dq' ]]; then
+
+            echo "mysqldump -sN ${wpdbconn}"
+
+        else 
+
+            echo "mysql ${wpdbconn}"
+
+        fi 
+
+    else
+
+        echo "no wordpress configuration found.."
 
     fi
-
-    wpdbconn="${wpdbname} -u ${wpdbuser} -p'${wpdbpass}' -h ${wpdbhost}"
-
-    if [[ "$1" == '-l' ]]; then 
-
-        echo -e "wpdbname: ${wpdbname}\nwpdbuser: ${wpdbuser}\nwpdbpass: ${wpdbpass}\nwpdbhost: ${wpdbhost}"
-
-    elif [[ "$1" == '-d' ]]; then
-
-        echo "mysqldump ${wpdbconn}"
-
-    elif [[ "$1" == '-q' ]]; then
-
-        echo "mysql -sN ${wpdbconn}"
-    
-    elif [[ "$1" == '-qd' || "$1" == '-dq' ]]; then
-
-        echo "mysqldump -sN ${wpdbconn}"
-
-    else 
-
-        echo "mysql ${wpdbconn}"
-
-    fi 
 
 }
 wpdbconn $1
