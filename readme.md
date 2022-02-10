@@ -25,7 +25,7 @@ source ~/bin/migbin/bashrc
 #### exportdbs
 - exports all databases placing them in ```~/migration_dbs/dbs```  
 #### findwpandimport
-- Runs a find for wordpress sites in public_html and imports the matching sql file from ```~/migration/dbs.```  
+- Runs a find for wordpress sites in public_html and imports the matching sql file from ```~/migration/dbs/```.  
 - only runs if there is only one sql file that contains the full database name as read from each wp-config.php file.
 #### fixall
 - Runs both fixfiles and fixdirs
