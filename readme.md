@@ -104,9 +104,8 @@ purges the cache and runs a search-replace for wordpress sites.
 rsyncs from the source server with first argument to the logged in server as the second argument.
 * examples:
     * migsync public_html/ ~/migration/files
-    * migsync etc/example.com ~/etc
-You can brace expand to grab multiple directoried from a source if you wrap the first argument in singlequotes.
-* example:
+    * migsync etc/example.com ~/etc.
+* You can brace expand to grab multiple directoried from a source if you wrap the first argument in singlequotes:
     * migsync '{etc,mail,public_html,migrationdbs}' ~/migration
 #### mkcd _bashrc function_
 Takes in a list of directories to make and cds you to the last one. This uses mkdir -p.
