@@ -22,7 +22,7 @@ source ~/bin/migbin/bashrc
 - Alternative for dumping wp databases, doesn't use wpcli, works on older wp versions.
 #### ducount
 - Reports disk usage, filecount, and maps directories
-* usage
+* usage:
     * ducount [ # of levels to report ]
 #### exportdbs
 - exports all databases placing them in ~/migration_dbs/dbs
@@ -41,7 +41,7 @@ source ~/bin/migbin/bashrc
 - Runs a set of common wordpress fixes in your current directory.
 #### free_wordpress
 - Accepts a php version, WordPress version and list of urls to WordPress backup files and installs the site in the current directory.
-* example usage:
+- example:
     * ```$ free_wordpress --wp-version="5.3.3" --php-version="7.3" https://url.1 https://url.2 https://url.3 ...```
 - urls are automatically detected in the command-line arguments.
 * flags
@@ -70,7 +70,7 @@ source ~/bin/migbin/bashrc
 #### mailprep
 - Prompts you for a list of imap lines and creates email accounts for you. Does not play nicely with some passwords.
 - Imap lines look like this:
-    ```source-imap-mailserver source-email-address source-password destination-imap-mailserver destination-email-address destination-password```
+    * ```source-imap-mailserver source-email-address source-password destination-imap-mailserver destination-email-address destination-password```
 #### mailsync
 - syncs etc and mail.  used to sync an individual domain.
 - does not overwrite existing pw files. 
