@@ -42,7 +42,7 @@ source ~/bin/migbin/bashrc
 - example:  
 ```$ free_wordpress --wp-version="5.3.3" --php-version="7.3" https://url.1 https://url.2 https://url.3 ...```  
 - urls are automatically detected in the command-line arguments.
-* flags
+* flags  
     ```-h --help``` : displays this message  
     ```-t --test``` : runs automated testing on the functions in this file.  
     ```-w --wordpress-version``` : sets the wordpress version of the install  
@@ -63,7 +63,7 @@ source ~/bin/migbin/bashrc
     ```listwp domain.com```  
 #### lftpline
 - Prompts for lftp creds to autogenerate lftp line.
-* flags
+* flags  
     ```-go``` --opens lftp connection instead of printing line  
 #### mailprep
 - Prompts you for a list of imap lines and creates email accounts for you. Does not play nicely with some passwords.
@@ -95,7 +95,7 @@ source ~/bin/migbin/bashrc
 - Logs in to the source server
 #### migssl
 - purges the cache and runs a search-replace for wordpress sites.
-* flags
+* flags  
     ```-on``` --secures site, replaces http links with https  
     ```-off``` --disables https for the site, deactivates a few plugins which force ssl on wp sites.  
 #### migsync
@@ -129,7 +129,7 @@ source ~/bin/migbin/bashrc
 - This is wpcli use with --help to see help for every command
 #### wpdbconn
 - prints wp install mysql connection line, mysqldump line, or lists the db credentials. 
-* flags  
+* flags    
     no flag will print the mysql connection string for the wp installation
     ```-l``` --lists the db credentials  
     ```-d``` --prints the mysql dump line  
@@ -143,7 +143,7 @@ source ~/bin/migbin/bashrc
 - Displays info about te wordpress site in the current dir.
 #### wpinstall
 - Installs a fresh wordpress site or repairs existing. 
-* flags
+* flags  
     ```-db --runs wpdbimport after install```  
 #### wpjquery
 - Installs and activates the plugin enable-jquery-migrate-helper for wp sites w/ js errors
@@ -158,7 +158,7 @@ source ~/bin/migbin/bashrc
 #### wpurl
 - Lets you read and/or set the home and/or siteurl option for the wordpress site in the current directory.
 - Run without flags to only read the values.
-* flags
+* flags  
     ```-n``` Sets both to provided argument  
     ```-h``` Sets home to provided argument.  
     ```-s``` Sets siteurl to provided argument.  
