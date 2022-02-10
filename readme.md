@@ -149,7 +149,7 @@ source ~/bin/migbin/bashrc
 - Installs and activates the plugin enable-jquery-migrate-helper for wp sites w/ js errors
 #### wplive
 - configures a wordpress site from the backup directory to it's live directory
-- example:
+- example:  
     ```wplive ~/migration/files/ ~/public_html/```  
 #### wptoggle
 - Lists all active plugins and toggles off then on. Situational use only, deactivating plugins can cause issues w/ sites db's.
