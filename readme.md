@@ -23,7 +23,7 @@ Alternative for dumping wp databases, doesn't use wpcli, works on older wp versi
 #### ducount
 Reports disk usage, filecount, and maps directories
 * usage
-** ducount [ # of levels to report ]
+    * ducount [ # of levels to report ]
 #### exportdbs
 exports all databases placing them in ~/migration_dbs/dbs
 #### findwpandimport
@@ -45,10 +45,10 @@ example usage:
 ```$ free_wordpress --wp-version="5.3.3" --php-version="7.3" https://url.1 https://url.2 https://url.3 ...```
 urls are automatically detected in the command-line arguments.
 * flags
-** -h --help : displays this message
-** -t --test : runs automated testing on the functions in this file.
-** -w --wordpress-version : sets the wordpress version of the install
-** -p --php-version : sets the php version of the install
+    * -h --help : displays this message
+    * -t --test : runs automated testing on the functions in this file.
+    * -w --wordpress-version : sets the wordpress version of the install
+    * -p --php-version : sets the php version of the install
 #### getmysites
 Builds an outline of all wordpress sites on the account and saves to ~/migration/migstuff/mysites.txt
 #### gdrive 
@@ -62,11 +62,11 @@ Imports a psbu db and all.
 #### listwp
 Search for all Wordpress websites and lists the URL and filepath for each. You can pass in a domain to search for specifically.
 * example:
-** listwp domain.com
+    * listwp domain.com
 #### lftpline
 Prompts for lftp creds to autogenerate lftp line.
 * flags
-** -go --opens lftp connection instead of printing line
+    * -go --opens lftp connection instead of printing line
 #### mailprep
 Prompts you for a list of imap lines and creates email accounts for you. Does not play nicely with some passwords.
 Imap lines look like this:
@@ -76,7 +76,7 @@ syncs etc and mail.  used to sync an individual domain.
 does not overwrite existing pw files. 
 outputs mailcount differences.
 example: 
-** mailsync example.com # syncs mail for example.com
+    * mailsync example.com # syncs mail for example.com
 #### mainurlit
 sets the tempurl back to the main url based on the .mainurl file located in the cwd
 #### phpver
@@ -92,22 +92,22 @@ Takes the path to a wordpress site on the source and the path to install it to o
 #### migrun
 runs a command on the server setup with the setupssh command
 * example:
-** migrun ls migrationdbs
+    * migrun ls migrationdbs
 #### migssh
 Logs in to the source server
 #### migssl
 purges the cache and runs a search-replace for wordpress sites.
 * flags
-** -on  --secures site, replaces http links with https
-** -off --disables https for the site, deactivates a few plugins which force ssl on wp sites.
+    * -on  --secures site, replaces http links with https
+    * -off --disables https for the site, deactivates a few plugins which force ssl on wp sites.
 #### migsync
 rsyncs from the source server with first argument to the logged in server as the second argument.
 * examples:
-** migsync public_html/ ~/migration/files
-** migsync etc/example.com ~/etc
+    * migsync public_html/ ~/migration/files
+    * migsync etc/example.com ~/etc
 You can brace expand to grab multiple directoried from a source if you wrap the first argument in singlequotes.
 * example:
-** migsync '{etc,mail,public_html,migrationdbs}' ~/migration
+    * migsync '{etc,mail,public_html,migrationdbs}' ~/migration
 #### mkcd _bashrc function_
 Takes in a list of directories to make and cds you to the last one. This uses mkdir -p.
 #### premig
@@ -133,11 +133,11 @@ This is wpcli use with --help to see help for every command
 #### wpdbconn
 prints wp install mysql connection line, mysqldump line, or lists the db credentials. 
 * flags
-** no flag will print the mysql connection string for the wp installation
-** -l --lists the db credentials
-** -d --prints the mysql dump line 
-** -q --silent mode
-** the flags q and d can be combined as either -qd or -dq
+    * no flag will print the mysql connection string for the wp installation
+    * -l --lists the db credentials
+    * -d --prints the mysql dump line 
+    * -q --silent mode
+    * the flags q and d can be combined as either -qd or -dq
 #### wpdbimport
 Imports an sql file, as the argument, and sets up a wp-config.php file for it if there is already a wp-config file in the current directory.
 #### wpht
@@ -147,13 +147,13 @@ Displays info about te wordpress site in the current dir.
 #### wpinstall
 Installs a fresh wordpress site or repairs existing. 
 * flags
-** -db --runs wpdbimport after install
+    * -db --runs wpdbimport after install
 #### wpjquery
 Installs and activates the plugin enable-jquery-migrate-helper for wp sites w/ js errors
 #### wplive
 configures a wordpress site from the backup directory to it's live directory
 * example:
-** wplive ~/migration/files/ ~/public_html
+    * wplive ~/migration/files/ ~/public_html
 #### wptoggle
 Lists all active plugins and toggles off then on. Situational use only, deactivating plugins can cause issues w/ sites db's.
 #### wpup
@@ -162,6 +162,6 @@ Updates wp-config.php variables in the current dir.
 Lets you read and/or set the home and/or siteurl option for the wordpress site in the current directory.
 Run without flags to only read the values.
 * flags
-** -n Sets both to provided argument.
-** -h Sets home to provided argument.
-** -s Sets siteurl to provided argument.
+    * -n Sets both to provided argument.
+    * -h Sets home to provided argument.
+    * -s Sets siteurl to provided argument.
