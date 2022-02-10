@@ -129,9 +129,9 @@ source ~/bin/migbin/bashrc
 - This is wpcli use with --help to see help for every command
 #### wpdbconn
 - prints wp install mysql connection line, mysqldump line, or lists the db credentials. 
-- flags:    
-    no flag will print the mysql connection string for the wp installation  
-    the flags q and d can be combined as either -qd or -dq  
+- flags:  
+    - no flag will print the mysql connection string for the wp installation  
+    - the flags q and d can be combined as either -qd or -dq  
     ```-l``` --lists the db credentials  
     ```-d``` --prints the mysql dump line  
     ```-q``` --silent mode  
