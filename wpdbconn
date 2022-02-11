@@ -41,9 +41,13 @@ function wpdbconn() {
 
             echo "mysqldump -sN ${wpdbconn}"
 
-        else 
+        elif [[ "$1" == '-c' ]]; then
 
             echo "mysql ${wpdbconn}"
+            
+        else 
+        
+            echo "${wpdbconn}"
 
         fi 
 
