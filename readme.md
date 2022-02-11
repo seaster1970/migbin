@@ -132,8 +132,9 @@ source ~/bin/migbin/bashrc
 - flags:  
     ```-l``` --lists the db credentials  
     ```-d``` --prints the mysql dump line  
-    ```-q``` --silent mode  
-    - no flag will print the mysql connection string for the wp installation  
+    ```-q``` --silent mode to disable mysql headers and messages  
+    ```-c``` --prefixes connection string with ```mysql```  
+    - no flag will print the mysql connection string for the wp installation without ```mysql```  prefixing the string  
     - the flags q and d can be combined as either -qd or -dq  
 #### wpdbimport
 - Imports an sql file, as the argument, and sets up a wp-config.php file for it if there is already a wp-config file in the current directory.
