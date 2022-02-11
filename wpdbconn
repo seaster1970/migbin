@@ -2,7 +2,8 @@
 function wpdbconn() {
 
     if [[ -s wp-config.php ]]; then
-
+        
+        timestamp=$(date +%s)d
         wpdbcreds=$(php -w wp-config.php | sed -rn s'/\;/\;\n/gp' | grep -oP 'define.+DB_(NAME|USER|PASSWORD|HOST).+\;$')
         wpdbname=$(php -r "${wpdbcreds} echo DB_NAME;")
         wpdbuser=$(php -r "${wpdbcreds} echo DB_USER;")
@@ -11,8 +12,8 @@ function wpdbconn() {
 
         if [[ "${wpdbhost}" == *':'* ]]; then
 
-            dbhost=$(echo ${wpdbhost} | cut -d ':' -f 1)
-            dbport=$(echo ${wpdbhost} | cut -d ':' -f 2)
+            dbhost=$(echo "${wpdbhost}" | cut -d ':' -f 1)
+            dbport=$(echo "${wpdbhost}" | cut -d ':' -f 2)
             wpdbhost="${dbhost} --port=${dbport}"
 
         fi
@@ -23,7 +24,7 @@ function wpdbconn() {
 
         fi 
         
-        wpdbconn="${wpdbname} -u ${wpdbuser} -p'${wpdbpass}' -h ${wpdbhost}"
+        wpdbconn="-D $wpdbname -u $wpdbuser -p'$wpdbpass' -h $wpdbhost"
 
         if [[ "$1" == '-l' ]]; then 
 
@@ -31,25 +32,40 @@ function wpdbconn() {
 
         elif [[ "$1" == '-d' ]]; then
 
-            echo "mysqldump ${wpdbconn}"
-
+            mysqldump "$wpdbname" -u "$wpdbuser" -p"$wpdbpass" -h "$wpdbhost" > "${wpdbname}_$timestamp".sql
+            
         elif [[ "$1" == '-q' ]]; then
 
-            echo "mysql -sN ${wpdbconn}"
+            mysql -sN "$wpdbname" -u "$wpdbuser" -p"$wpdbpass" -h "$wpdbhost"
         
         elif [[ "$1" == '-qd' || "$1" == '-dq' ]]; then
 
-            echo "mysqldump -sN ${wpdbconn}"
+            mysqldump -sN "$wpdbname" -u "$wpdbuser" -p"$wpdbpass" -h "$wpdbhost" > "${wpdbname}_$timestamp".sql
 
         elif [[ "$1" == '-c' ]]; then
 
-            echo "mysql ${wpdbconn}"
+            mysql "$wpdbname" -u "$wpdbuser" -p"$wpdbpass" -h "$wpdbhost"
             
         else 
         
             echo "${wpdbconn}"
 
         fi 
+
+        if [[ "$1" == '-qd' || "$1" == '-dq' || "$1" == '-d' ]]; then
+
+            if [[ -s "${wpdbname}_$timestamp.sql" ]]; then 
+            
+                echo "Success: dumped to ${wpdbname}_$timestamp.sql"
+            
+            else 
+            
+                echo -e "Failed to dump db $wpdbname. The following credentials were used: "
+                echo -e "wpdbname: ${wpdbname}\nwpdbuser: ${wpdbuser}\nwpdbpass: ${wpdbpass}\nwpdbhost: ${wpdbhost}"
+            
+            fi 
+
+        fi
 
     else
 
