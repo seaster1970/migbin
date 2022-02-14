@@ -12,56 +12,63 @@ function wpdbconn() {
 
         if [[ "${wpdbhost}" == *':'* ]]; then
 
-            dbhost=$(echo "${wpdbhost}" | cut -d ':' -f 1)
-            dbport=$(echo "${wpdbhost}" | cut -d ':' -f 2)
-            wpdbhost="${dbhost} --port=${dbport}"
+            wpdbhost=$(echo "${wpdbhost}" | cut -d ':' -f 1)
+            wpdbport=$(echo "${wpdbhost}" | cut -d ':' -f 2)
+
+        else 
+            wpdbhost="$wpdbhost"
+            wpdbport='3306'
 
         fi
 
         if [[ -z "${wpdbname}" || -z "${wpdbuser}" || -z "${wpdbpass}" || -z "${wpdbhost}" ]]; then 
 
-            echo -e "Could not set one or more variable, here is what was found:\nwpdbname: ${wpdbname}\nwpdbuser: ${wpdbuser}\nwpdbpass: ${wpdbpass}\nwpdbhost: ${wpdbhost}"
+            echo -e "Could not set one or more variable, here is what was found:\nwpdbname: ${wpdbname}\nwpdbuser: ${wpdbuser}\nwpdbpass: ${wpdbpass}\nwpdbhost: ${wpdbhost}\nwpdbport: ${wpdbport}"
 
         fi 
         
-        wpdbconn="-D $wpdbname -u $wpdbuser -p'$wpdbpass' -h $wpdbhost"
+        wpdbconn=( $(echo "$wpdbname" "$wpdbuser" "$wpdbpass" "$wpdbhost" "$wpdbport") )
 
         if [[ "$1" == '-l' ]]; then 
 
-            echo -e "wpdbname: ${wpdbname}\nwpdbuser: ${wpdbuser}\nwpdbpass: ${wpdbpass}\nwpdbhost: ${wpdbhost}"
+            echo -e "wpdbname: ${wpdbname}\nwpdbuser: ${wpdbuser}\nwpdbpass: ${wpdbpass}\nwpdbhost: ${wpdbhost}\nwpdbport: ${wpdbport}"
 
         elif [[ "$1" == '-d' ]]; then
 
-            mysqldump "$wpdbname" -u "$wpdbuser" -p"$wpdbpass" -h "$wpdbhost" > "${wpdbname}_$timestamp".sql
+            mysqldump "$wpdbname" -u "$wpdbuser" -p"$wpdbpass" -h "$wpdbhost" --port="$wpdbport" > "${wpdbname}"_"$timestamp".sql 
             
         elif [[ "$1" == '-q' ]]; then
 
-            mysql -sN "$wpdbname" -u "$wpdbuser" -p"$wpdbpass" -h "$wpdbhost"
+            mysql -sN "$wpdbname" -u "$wpdbuser" -p"$wpdbpass" -h "$wpdbhost" --port="$wpdbport" 2>/dev/null
         
         elif [[ "$1" == '-qd' || "$1" == '-dq' ]]; then
 
-            mysqldump -sN "$wpdbname" -u "$wpdbuser" -p"$wpdbpass" -h "$wpdbhost" > "${wpdbname}_$timestamp".sql
+            mysqldump "$wpdbname" -u "$wpdbuser" -p"$wpdbpass" -h "$wpdbhost" --port="$wpdbport" 2>/dev/null > "${wpdbname}"_"$timestamp".sql
 
         elif [[ "$1" == '-c' ]]; then
 
-            mysql "$wpdbname" -u "$wpdbuser" -p"$wpdbpass" -h "$wpdbhost"
+            mysql "$wpdbname" -u "$wpdbuser" -p"$wpdbpass" -h "$wpdbhost" --port="$wpdbport"
             
         else 
         
-            echo "${wpdbconn}"
+            echo "${wpdbconn[0]}"
+            echo "${wpdbconn[1]}"
+            echo "${wpdbconn[2]}"
+            echo "${wpdbconn[3]}"
+            echo "${wpdbconn[4]}"
 
         fi 
 
         if [[ "$1" == '-qd' || "$1" == '-dq' || "$1" == '-d' ]]; then
 
-            if [[ -s "${wpdbname}_$timestamp.sql" ]]; then 
+            if [[ -s "${wpdbname}"_"$timestamp.sql" ]]; then 
             
                 echo "Success: dumped to ${wpdbname}_$timestamp.sql"
             
             else 
             
-                echo -e "Failed to dump db $wpdbname. The following credentials were used: "
-                echo -e "wpdbname: ${wpdbname}\nwpdbuser: ${wpdbuser}\nwpdbpass: ${wpdbpass}\nwpdbhost: ${wpdbhost}"
+                echo -e "\nFailed to dump db $wpdbname. The following credentials were used: "
+                echo -e "wpdbname: ${wpdbname}\nwpdbuser: ${wpdbuser}\nwpdbpass: ${wpdbpass}\nwpdbhost: ${wpdbhost}\nwpdbport: ${wpdbport}"
             
             fi 
 
