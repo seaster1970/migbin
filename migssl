@@ -24,10 +24,10 @@ function cache_purge() {
 function replace_terms() {
   # Loop through array
   for i in ${urlarray[@]}; do 
-    ~/bin/migbin/wp search-replace "$term_1" "$term_2" --skip-packages 2>/dev/null | tail -n 1 | grep -i success
+    ~/bin/migbin/wp search-replace "$term_1" "$term_2" --skip-packages --skip-themes --skip-plugins  --skip-columns=guid 2>/dev/null | tail -n 1 | grep -i success
   done 
   # Check for elementor
-  ~/bin/migbin/wp plugin list --skip-packages | tail -n +2 | grep -v inactive | grep -v must-use | grep -v dropin | awk '{print $1}' | while read a_plugins ; do
+  ~/bin/migbin/wp plugin list --skip-packages --skip-themes --skip-plugins  | tail -n +2 | grep -v inactive | grep -v must-use | grep -v dropin | awk '{print $1}' | while read a_plugins ; do
     if [[ "$a_plugins" == 'elementor' ]] ; then 
       echo 'Fixing Elementor URLs'
       for i in ${urlarray[@]}; do 
@@ -40,9 +40,9 @@ function replace_terms() {
 
 function disable_https() {
   # Turn off plugins forcing ssl
-  ~/bin/migbin/wp plugin deactivate jetpack really-simple-ssl ssl-insecure-content-fixer --skip-packages 2>/dev/null | grep -iv Warning | grep -iv Error
-  ~/bin/migbin/wp plugin deactivate wp-super-cache wp-smushit wordfence wp-smush-pro wp-optimize hummingbird-performance --skip-packages 2>/dev/null | grep -iv Warning | grep -iv Error 
-  ~/bin/migbin/wp plugin deactivate w3-total-cache sucuri-scanner better-wp-security ithemes-security-pro ithemes-security --skip-packages 2>/dev/null | grep -iv Warning | grep -iv Error
+  ~/bin/migbin/wp plugin deactivate jetpack really-simple-ssl ssl-insecure-content-fixer --skip-packages --skip-themes --skip-plugins  2>/dev/null | grep -iv Warning | grep -iv Error
+  ~/bin/migbin/wp plugin deactivate wp-super-cache wp-smushit wordfence wp-smush-pro wp-optimize hummingbird-performance --skip-packages --skip-themes --skip-plugins  2>/dev/null | grep -iv Warning | grep -iv Error 
+  ~/bin/migbin/wp plugin deactivate w3-total-cache sucuri-scanner better-wp-security ithemes-security-pro ithemes-security --skip-packages --skip-themes --skip-plugins  2>/dev/null | grep -iv Warning | grep -iv Error
   term_1=$(echo "$sec$i")
   term_2=$(echo "$insec$i")
   replace_terms
