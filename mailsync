@@ -59,9 +59,9 @@ srcHome=`${sshConn} "pwd && exit"`
 # Write the rsync lines 
 if [[ -z "$1" ]]
 then 
-  rsync -avP -e \"ssh -i ${keyFile}\" ${creds}:${srcHome}/mail/ ${homedir}/mail/
-  rsync --ignore-existing -avP -e \"ssh -i ${keyFile}\" ${creds}:${srcHome}/etc/ ${homedir}/etc/
+  rsync -avP -e "ssh -i ${keyFile}\" ${creds}:${srcHome}/mail/ ${homedir}/mail/
+  rsync --ignore-existing -avP -e "ssh -i ${keyFile}\" ${creds}:${srcHome}/etc/ ${homedir}/etc/
 else 
-  rsync -e \"ssh -i ${keyFile}\" ${creds}:${srcHome}/mail/${1}/ ${homedir}/mail/${1}/
-  rsync --ignore-existing -avP -e \"ssh -i ${keyFile}\" ${creds}:${srcHome}/etc/${1}/ ${homedir}/etc/${1}/
+  rsync -e "ssh -i ${keyFile}\" ${creds}:${srcHome}/mail/${1}/ ${homedir}/mail/${1}/
+  rsync --ignore-existing -avP -e "ssh -i ${keyFile}\" ${creds}:${srcHome}/etc/${1}/ ${homedir}/etc/${1}/
 fi 
