@@ -2,24 +2,24 @@
 
 # make sure destination user is defined
 if [[ -z "$USER" ]]
-then 
+then
   user="$USER"
-else 
+else
   user=$(whoami)
 fi
 
-# check to make sure user is not root. 
+# check to make sure user is not root.
 if [[ "$user" == 'root' || -z "$user" ]]
-then 
+then
   echo "Cannot run as root. Please dj in before running mailsync."
-  exit 1 
-fi 
+  exit 1
+fi
 
 # Get directory paths for destination
 homedir=$(pwd | cut -d '/' -f 1,2,3)
 migdir="${homedir}/migration/migstuff"
 
-# check to see if ssh has already been setup and directories are present 
+# check to see if ssh has already been setup and directories are present
 if [[ ! -d ${migdir} || ! -s ${migdir}/source.txt || ! -s ${migdir}/id_rsa ]]
 then
   setupssh
@@ -41,27 +41,27 @@ echo -n "Checking SSH connection to source. "
 connStatusCode=$(testConn)
 
 if [[ "$connStatusCode" == '255' ]]
-then 
+then
   connStatus='fail'
   echo "Connection $connStatus"
   exit 1
 elif [[ "$connStatusCode" == '0' ]]
-then 
+then
   connStatus='success'
   echo "Connection $connStatus"
-else 
+else
   echo 'unexpected output, check ssh connection files and credentials'
 fi
 
 # Get the source user mail directory path and contents
-srcHome=$(${sshConn} "pwd && exit")
+srcHome=`${sshConn} "pwd && exit"`
 
-# Write the rsync lines 
+# Write the rsync lines
 if [[ -z "$1" ]]
-then 
+then
   rsync -avP -e "ssh -i ${keyFile}" ${creds}:${srcHome}/mail/ ${homedir}/mail/
   rsync --ignore-existing -avP -e "ssh -i ${keyFile}" ${creds}:${srcHome}/etc/ ${homedir}/etc/
-else 
-  rsync -e "ssh -i ${keyFile}" ${creds}:${srcHome}/mail/${1}/ ${homedir}/mail/${1}/
+else
+  rsync -avP -e "ssh -i ${keyFile}" ${creds}:${srcHome}/mail/${1}/ ${homedir}/mail/${1}/
   rsync --ignore-existing -avP -e "ssh -i ${keyFile}" ${creds}:${srcHome}/etc/${1}/ ${homedir}/etc/${1}/
-fi 
+fi
