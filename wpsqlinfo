@@ -3,22 +3,28 @@ function sqlformatting() {
     echo -e "Prefix:#$prefix\nHome:#$home\nsiteurl#$siteurl\nUpload Path:#$upload_path\nTemplate:#$template\nStylesheet:#$stylesheet\nExported#$exported\nActive Plugins:\n" | column -t -s '#'
 }
 function searchdumps() {
-    i=0
-    prefix=$(grep -oP 'CREATE TABLE.+[^\w]\K\w+_(?=options)' $dbfile)
-    if [[ -n "$prefix" ]]; then
-        home=$(grep -m1 -oP "INSERT INTO.+($prefix)(options).+home(\'|\")[\,\s]+(\'|\")\Khttp(s)?\:\/\/[\w\.\/\-]+(?=\'|\")" $dbfile)
-        siteurl=$(grep -m1 -oP "INSERT INTO.+($prefix)(options).+siteurl(\'|\")[\,\s]+(\'|\")\Khttp(s)?\:\/\/[\w\.\/\-]+(?=\'|\")" $dbfile)
-        upload_path=$(grep -m1 -oP "INSERT INTO.+($prefix)(options).+upload_path(\'|\")[\,\s]+\K(\'|\")[^\'\"]*('|\")" $dbfile)
-        template=$(grep -m1 -oP "INSERT INTO.+($prefix)(options).+template(\'|\")[\,\s]+(\'|\")\K[^\'\"]*(?=\'|\")" $dbfile)
-        stylesheet=$(grep -m1 -oP "INSERT INTO.+($prefix)(options).+stylesheet(\'|\")[\,\s]+(\'|\")\K[^\'\"]*(?=\'|\")" $dbfile)
-        plugins_unformatted=$(grep -oP "INSERT INTO.+($prefix)(options).+\Kactive_plugins(\'|\")[\,\s]+(\'|\")a\:\d+\:\{\K[^\}]+" $dbfile)
-        plugins=($(echo "$plugins_unformatted" | grep -oP "i\:\d+\;s\:\d+\:.(\'|\")\K[\w\.\-]+"))
-        exported=$(tail $dbfile | sed -rn 's/\-\- Dump completed on\s+//p')
+    prefixlist=($(grep -oP 'CREATE TABLE.+[^\w]\K\w+_(?=options)' $dbfile))
+    if [[ -n "${prefixlist[0]}" ]]; then
+        for prefix in "$prefixlist"; do
+            siteurl=$(grep -m1 -oP "INSERT INTO.+($prefix)(options).+siteurl(\'|\")[\,\s]+(\'|\")\Khttp(s)?\:\/\/[\w\.\/\-]+(?=\'|\")" $dbfile)
+            if [[ -n "$siteurl" ]]; then
+                i=0
+                home=$(grep -m1 -oP "INSERT INTO.+($prefix)(options).+home(\'|\")[\,\s]+(\'|\")\Khttp(s)?\:\/\/[\w\.\/\-]+(?=\'|\")" $dbfile)
+                upload_path=$(grep -m1 -oP "INSERT INTO.+($prefix)(options).+upload_path(\'|\")[\,\s]+\K(\'|\")[^\'\"]*('|\")" $dbfile)
+                template=$(grep -m1 -oP "INSERT INTO.+($prefix)(options).+template(\'|\")[\,\s]+(\'|\")\K[^\'\"]*(?=\'|\")" $dbfile)
+                stylesheet=$(grep -m1 -oP "INSERT INTO.+($prefix)(options).+stylesheet(\'|\")[\,\s]+(\'|\")\K[^\'\"]*(?=\'|\")" $dbfile)
+                plugins_unformatted=$(grep -oP "INSERT INTO.+($prefix)(options).+\Kactive_plugins(\'|\")[\,\s]+(\'|\")a\:\d+\:\{\K[^\}]+" $dbfile)
+                plugins=($(echo "$plugins_unformatted" | grep -oP "i\:\d+\;s\:\d+\:.(\'|\")\K[\w\.\-]+"))
+                exported=$(tail $dbfile | sed -rn 's/\-\- Dump completed on\s+//p')
 
-        echo -e "\n==> $dbfile <=="
-        sqlformatting
-        for plugin in ${plugins[@]}; do
-            echo -e "\t\t $plugin"
+                echo -e "\n==> $dbfile <=="
+                sqlformatting
+                for plugin in ${plugins[@]}; do
+                    echo -e "\t\t $plugin"
+                done
+            else
+                echo "Could not find wp prefix in $dbfile"
+            fi
         done
     else
         echo "Could not find wp prefix in $dbfile"
