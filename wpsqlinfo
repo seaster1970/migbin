@@ -38,8 +38,10 @@ function wpcheck() {
         else
             searchdumps "$dbfile"
         fi
-    else
+    elif [[ -f "$dbfile" ]]; then
         echo -e "\n$dbfile is empty."
+    else 
+        echo -e "\n$1 does not exist in this directory."
     fi
 }
 function main() {
