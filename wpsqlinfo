@@ -1,6 +1,6 @@
 #!/bin/bash
 function sqlformatting() {
-    echo -e "Prefix:#$prefix\nHome:#$home\nsiteurl#$siteurl\nUpload Path:#$upload_path\nTemplate:#$template\nStylesheet:#$stylesheet\nExported#$exported\nActive Plugins:\n" | column -t -s '#'
+    echo -e "Prefix:#$prefix\nHome:#$home\nSiteURL:#$siteurl\nUpload Path:#$upload_path\nTemplate:#$template\nStylesheet:#$stylesheet\nExported#$exported\nActive Plugins:\n" | column -t -s '#'
 }
 function searchdumps() {
     prefixlist=($(grep -oP 'CREATE TABLE.+[^\w]\K\w+_(?=options)' $dbfile))
