@@ -152,6 +152,8 @@ source ~/bin/migbin/bashrc
 - configures a wordpress site from the backup directory to it's live directory
 - example:  
     ```wplive ~/migration/files/ ~/public_html/```  
+#### wpsqlinfo
+- searches mysql dump files for WordPress site information
 #### wptoggle
 - Lists all active plugins and toggles off then on. Situational use only, deactivating plugins can cause issues w/ sites db's.
 #### wpup
