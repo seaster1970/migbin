@@ -1,0 +1,42 @@
+#!/bin/bash
+function takedown(){
+    TODAY=$(date +'%m-%d-%Y')
+    DESTINATION="$HOME/.pst3/takedown-${TODAY}"
+    CURRENT_DIRECTORY=$(pwd)
+    mkdir -p $DESTINATION
+
+    find . -type d -name "dev*" | while read line
+    do
+        cd $CURRENT_DIRECTORY
+        chmod 755 $line
+        cd $line
+        wp db export
+        cd $CURRENT_DIRECTORY
+        mv "$line" "$DESTINATION"/
+    done
+
+    echo -n "Takedown $CURRENT_DIRECTORY ? y/n: "
+    read CONFIRMATION
+    echo "Confirmation is $CONFIRMATION"
+    if [ $CONFIRMATION == "y" ]
+    then
+        echo "Moving files.."
+        cd "$CURRENT_DIRECTORY/"
+        wp db export
+        mv "$CURRENT_DIRECTORY"/* "$DESTINATION"/
+        mv "$CURRENT_DIRECTORY"/.* "$DESTINATION"/
+        touch "$CURRENT_DIRECTORY/index.html"
+        echo '<!doctype html>' >> "$CURRENT_DIRECTORY/index.html"
+        echo '<html lang="en">' >> "$CURRENT_DIRECTORY/index.html"
+        echo '<head></head>' >> "$CURRENT_DIRECTORY/index.html"
+        echo '<body>' >> "$CURRENT_DIRECTORY/index.html"
+        echo '<h1>Please contact your web host.</h1>' >> "$CURRENT_DIRECTORY/index.html"
+        echo '</body>' >> "$CURRENT_DIRECTORY/index.html"
+        echo '</html>' >> "$CURRENT_DIRECTORY/index.html"
+        chmod 000 $DESTINATION
+    fi
+
+    echo "Completed takedown!"
+    echo "Files are located in $DESTINATION"
+}
+takedown
