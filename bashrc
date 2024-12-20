@@ -16,6 +16,8 @@ alias db='grep DB_ wp-config.php'
 alias prefix="grep prefix wp-config.php"
 alias ll="ls -lah"
 alias wpsqlurl="grep -oP siteurl\',\ ?\'[a-zA-Z0-8:/\.~]+\' "
+alias true="wp config set WP_DEBUG true"
+alias false="wp config set WP_DEBUG false"
 function mkcd() {
     for x in "$@"; do
         mkdir -p "$x"
